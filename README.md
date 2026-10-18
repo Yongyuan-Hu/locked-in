@@ -4,7 +4,7 @@ A Mac app that puts an allowlist at the center of a timed focus session. Choose 
 
 **Current release: 0.1.1 preview. macOS 13 or newer, Apple Silicon and Intel.**
 
-![LockedIn detecting an existing systemwide SelfControl session](docs/locked-in.png)
+![LockedIn explicitly showing the saved allowlist inactive during an existing SelfControl session](docs/locked-in.png)
 
 ## What it does
 
