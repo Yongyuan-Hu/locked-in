@@ -2,7 +2,7 @@
 
 A Mac app that puts an allowlist at the center of a timed focus session. Choose the websites you need, set a duration, and let SelfControl's systemwide firewall engine handle the block.
 
-**First release: 0.1.0 preview. macOS 13 or newer, Apple Silicon and Intel.**
+**Current release: 0.1.1 preview. macOS 13 or newer, Apple Silicon and Intel.**
 
 ![LockedIn detecting an existing systemwide SelfControl session](docs/locked-in.png)
 
@@ -13,6 +13,7 @@ A Mac app that puts an allowlist at the center of a timed focus session. Choose 
 - Systemwide network blocking through the bundled, unmodified SelfControl 4.0.2 engine.
 - Blocks continue after LockedIn closes or the Mac restarts. An active block cannot be cancelled early.
 - Detects an existing SelfControl session and prevents overlapping blocks.
+- Explicitly shows that the saved allowlist is inactive when another SelfControl session prevents starting it. Saving or importing a profile does not activate blocking.
 - A menu-bar shortcut and a session countdown.
 - No Chrome extension, cloud account, or history upload is required.
 
@@ -28,7 +29,7 @@ This preview has an ad-hoc signature for its new frontend and is not notarized. 
 
 ## Use
 
-1. [Download the 0.1.0 preview](https://github.com/Yongyuan-Hu/locked-in/releases/tag/v0.1.0), or build the app below.
+1. [Download the 0.1.1 preview](https://github.com/Yongyuan-Hu/locked-in/releases/tag/v0.1.1), or build the app below.
 2. Open `LockedIn.app`.
 3. Open **Allowlist**, enter one hostname per line, and save. Include the login, document, and supporting services your workflow needs.
 4. Check **Engine**. An existing SelfControl block must finish before another can begin.
@@ -56,6 +57,8 @@ The SwiftUI app validates and saves an allowlist locally. On a confirmed start, 
 Engine status is checked independently of the displayed countdown. Unknown or failed status checks disable starting a new block. The display timer uses system uptime during the same boot; the engine's own timer remains authoritative for enforcement.
 
 The shared SelfControl daemon means a session started in either application is visible to the other. LockedIn does not change an existing session.
+
+If another SelfControl session is already running, LockedIn cannot activate its saved allowlist until that session finishes. The existing session keeps its original mode and rules, so websites outside the saved allowlist may still open. An engine connection or a saved domain count is not confirmation that the allowlist is active.
 
 ## Privacy
 

@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-version="0.1.0"
+version="0.1.1"
 engine_version="4.0.2"
 engine_sha="15d8fd17839746c608d0c4e929b650d741e691ebee6f893320c783e86ac75926"
 cache="$PWD/.engine-cache"
@@ -29,12 +29,12 @@ if [[ "$signature" != *"TeamIdentifier=EG6ZYP3AQH"* ]]; then
 fi
 
 for architecture in arm64 x86_64; do
-  /usr/bin/xcrun swift build --configuration release --arch "$architecture" --product LockedIn
+  /usr/bin/xcrun swift build --scratch-path "$PWD/.build-universal/$architecture" --configuration release --arch "$architecture" --product LockedIn
 done
 
 app="$PWD/dist/LockedIn.app"
 mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
-/usr/bin/lipo -create .build/arm64-apple-macosx/release/LockedIn .build/x86_64-apple-macosx/release/LockedIn -output "$app/Contents/MacOS/LockedIn"
+/usr/bin/lipo -create .build-universal/arm64/arm64-apple-macosx/release/LockedIn .build-universal/x86_64/x86_64-apple-macosx/release/LockedIn -output "$app/Contents/MacOS/LockedIn"
 /bin/cp Resources/Info.plist "$app/Contents/Info.plist"
 /bin/cp LICENSE "$app/Contents/Resources/LICENSE"
 /bin/cp THIRD_PARTY_NOTICES.md "$app/Contents/Resources/THIRD_PARTY_NOTICES.md"

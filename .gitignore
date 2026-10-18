@@ -1,4 +1,5 @@
 .build/
+.build-universal/
 .swiftpm/
 dist/
 .engine-cache/

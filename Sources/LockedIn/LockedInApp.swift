@@ -23,7 +23,7 @@ struct LockedInApp: App {
         }
         .defaultSize(width: 960, height: 700)
         MenuBarExtra("LockedIn", systemImage: "lock.shield") {
-            Text(model.isOwnSession ? "Focus session · \(model.timerText) left" : (model.isActive ? model.engineMessage : "Ready when you are"))
+            Text(model.isOwnSession ? "Focus session · \(model.timerText) left" : (model.isActive ? "Your saved allowlist is not active" : "Ready when you are"))
             Button("Open LockedIn") {
                 openWindow(id: "main")
                 NSApplication.shared.activate(ignoringOtherApps: true)
@@ -88,23 +88,23 @@ private struct MainView: View {
 
     private var focus: some View {
         VStack(alignment: .leading, spacing: 24) {
-            Text(model.isActive ? "Stay with what matters." : "Make room for your work.")
+            Text(model.isOwnSession ? "Stay with what matters." : (model.isActive ? "Your allowlist is not active." : "Make room for your work."))
                 .font(.largeTitle.weight(.semibold))
-            Text("Only the websites you choose. One session at a time.").foregroundStyle(.secondary)
+            Text(model.engineRunning && !model.isOwnSession ? "Another SelfControl block is running. Saving a list does not activate it." : "Only the websites you choose. One session at a time.").foregroundStyle(.secondary)
             VStack(alignment: .leading, spacing: 22) {
                 HStack {
-                    Label(model.isActive ? "FOCUS SESSION" : "YOUR NEXT SESSION", systemImage: "timer")
+                    Label(model.isOwnSession ? "FOCUS SESSION" : (model.isActive ? "ALLOWLIST NOT ACTIVE" : "YOUR NEXT SESSION"), systemImage: "timer")
                         .font(.caption.weight(.semibold)).foregroundStyle(.secondary)
                     Spacer()
                     if model.isActive {
-                        Label(model.engineMessage, systemImage: model.engineRunning ? "checkmark.shield" : "hourglass")
-                            .font(.caption).foregroundStyle(model.engineRunning ? .green : .orange)
+                        Label(model.isOwnSession ? model.engineMessage : (model.isStarting ? "Waiting for authorization" : "Existing block prevents starting"), systemImage: model.isOwnSession ? "checkmark.shield" : "exclamationmark.circle")
+                            .font(.caption).foregroundStyle(model.isOwnSession ? .green : .orange)
                     }
                 }
                 if model.isActive {
-                    Text(model.isOwnSession ? model.timerText : (model.isStarting ? "Starting…" : "Locked in")).font(.system(size: model.isOwnSession ? 64 : 42, weight: .medium, design: .rounded)).monospacedDigit()
-                    Text(model.isOwnSession ? "Time remaining" : model.engineMessage).foregroundStyle(.secondary)
-                    Text(model.isOwnSession ? "Your allowlist is locked until this session ends. Closing this app does not end the session." : (model.isStarting ? "Complete the engine’s macOS authorization prompt. Blocking status will appear after confirmation." : "An existing SelfControl block is running. New blocks are disabled until it finishes."))
+                    Text(model.isOwnSession ? model.timerText : (model.isStarting ? "Starting…" : "Not started")).font(.system(size: model.isOwnSession ? 64 : 42, weight: .medium, design: .rounded)).monospacedDigit()
+                    Text(model.isOwnSession ? "Time remaining" : "Your saved allowlist is not being enforced by LockedIn.").foregroundStyle(.secondary)
+                    Text(model.isOwnSession ? "Your allowlist is locked until this session ends. Closing this app does not end the session." : (model.isStarting ? "Complete the engine’s macOS authorization prompt. Blocking status will appear after confirmation." : "The existing SelfControl session keeps its original rules. Websites outside your saved list may still open. This engine cannot replace or overlap the running session."))
                         .font(.callout).foregroundStyle(.secondary)
                 } else {
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
@@ -122,7 +122,7 @@ private struct MainView: View {
             .background(.quaternary.opacity(0.28), in: RoundedRectangle(cornerRadius: 18))
             HStack(spacing: 24) {
                 Label("\(model.domainCount) saved profile domains", systemImage: "checklist")
-                Label("Systemwide on this Mac", systemImage: "desktopcomputer")
+                Label(model.isOwnSession ? "Systemwide on this Mac" : "Saved for your next session", systemImage: "desktopcomputer")
             }.font(.callout).foregroundStyle(.secondary)
             if !model.engineChecked {
                 Button("Check the blocking engine") { model.section = "Engine" }.buttonStyle(.link)
