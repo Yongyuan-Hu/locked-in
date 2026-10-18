@@ -47,5 +47,7 @@ mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 /usr/bin/codesign --verify --strict "$app"
 /usr/bin/codesign --verify --deep --strict "$app/Contents/Resources/SelfControl.app"
 /usr/bin/ditto -c -k --sequesterRsrc --keepParent "$app" "$PWD/dist/LockedIn-$version-macOS-universal.zip"
-/usr/bin/shasum -a 256 "dist/LockedIn-$version-macOS-universal.zip" > dist/SHA256SUMS.txt
+release_name="LockedIn-$version-macOS-universal.zip"
+release_hash=$(/usr/bin/shasum -a 256 "dist/$release_name")
+printf '%s  %s\n' "${release_hash%% *}" "$release_name" > dist/SHA256SUMS.txt
 echo "Built $app"
