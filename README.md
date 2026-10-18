@@ -28,7 +28,7 @@ This preview has an ad-hoc signature for its new frontend and is not notarized. 
 
 ## Use
 
-1. Build the app below, or download a release archive when available.
+1. [Download the 0.1.0 preview](https://github.com/Yongyuan-Hu/locked-in/releases/tag/v0.1.0), or build the app below.
 2. Open `LockedIn.app`.
 3. Open **Allowlist**, enter one hostname per line, and save. Include the login, document, and supporting services your workflow needs.
 4. Check **Engine**. An existing SelfControl block must finish before another can begin.
