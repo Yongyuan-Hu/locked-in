@@ -1,0 +1,11 @@
+.build/
+.swiftpm/
+dist/
+.engine-cache/
+.build-intel/
+.DS_Store
+*.local.json
+*.local.txt
+*.pem
+*.key
+private/

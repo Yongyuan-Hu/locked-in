@@ -1,0 +1,10 @@
+{
+  "project": "SelfControl",
+  "version": "4.0.2",
+  "repository": "https://github.com/SelfControlApp/selfcontrol",
+  "revision": "4562c9716f83eb3cadbc8f6b3e9ecc3e2f672531",
+  "sourceDirectory": "Vendor/SelfControl",
+  "binaryURL": "https://downloads.selfcontrolapp.com/SelfControl-4.0.2.zip",
+  "binarySHA256": "15d8fd17839746c608d0c4e929b650d741e691ebee6f893320c783e86ac75926",
+  "license": "GPL-3.0-or-later"
+}

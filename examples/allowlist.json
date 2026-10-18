@@ -1,0 +1,12 @@
+{
+  "allowEducationDomains": false,
+  "domains": [
+    "chatgpt.com",
+    "claude.ai",
+    "coursera.org",
+    "docs.google.com",
+    "drive.google.com",
+    "github.com",
+    "wikipedia.org"
+  ]
+}
