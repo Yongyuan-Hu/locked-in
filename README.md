@@ -4,6 +4,8 @@ A Mac app that puts an allowlist at the center of a timed focus session. Choose 
 
 **First release: 0.1.0 preview. macOS 13 or newer, Apple Silicon and Intel.**
 
+![LockedIn detecting an existing systemwide SelfControl session](docs/locked-in.png)
+
 ## What it does
 
 - An allowlist-first interface with saved profiles and JSON import/export.
